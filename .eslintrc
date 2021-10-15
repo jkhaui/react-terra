@@ -1,0 +1,35 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "airbnb-typescript",
+    "prettier",
+    "plugin:testing-library/recommended"
+  ],
+  "plugins": ["prettier"],
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "project": ["./tsconfig.json"],
+    "ecmaVersion": 2020,
+    "ecmaFeatures": {
+      "legacyDecorators": true,
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "17"
+    }
+  },
+  "rules": {
+    "space-before-function-paren": 0,
+    "react/prop-types": 0,
+    "react/jsx-handler-names": 1,
+    "react/jsx-fragments": 1,
+    "react/no-unused-prop-types": 0,
+    "import/export": 0
+  }
+}

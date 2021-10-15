@@ -1,0 +1,25 @@
+.features {
+  min-height: 100vH;
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.featureImg {
+  height: 200px;
+  width: 200px;
+}
+
+@media screen and (max-width: 966px) {
+  .featureImg {
+    height: 124px;
+    width: 124px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .featureCol {
+    padding: 2em 0 !important;
+  }
+}

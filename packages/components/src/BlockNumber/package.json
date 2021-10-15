@@ -1,0 +1,30 @@
+{
+  "name": "@react-terra/block-number",
+  "version": "0.0.84",
+  "description": "React UI components built for Terra dApps.",
+  "license": "Apache-2.0",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "types": "dist/types.d.ts",
+  "source": "src/index.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jkhaui/react-terra"
+  },
+  "dependencies": {
+    "@react-terra/hooks": "^0.0.84"
+  },
+  "peerDependencies": {
+    "@terra-money/terra.js": "^2.0.14",
+    "@terra-money/wallet-provider": "^2.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

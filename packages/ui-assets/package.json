@@ -1,0 +1,22 @@
+{
+  "name": "@react-terra/ui-assets",
+  "author": "jkhaui <jordan.lee.163@gmail.com>",
+  "version": "0.0.84",
+  "private": false,
+  "license": "MIT",
+  "description": "Static assets for Terra dApps.",
+  "main": "index.ts",
+  "sideEffects": false,
+  "keywords": [
+    "terra",
+    "blockchain",
+    "luna",
+    "stablecoin",
+    "stablecoins",
+    "ust",
+    "aut",
+    "krt",
+    "sdt",
+    "dapp"
+  ]
+}

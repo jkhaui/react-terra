@@ -1,0 +1,68 @@
+{
+  "name": "@react-terra/hooks",
+  "private": false,
+  "sideEffects": false,
+  "version": "0.0.84",
+  "description": "Rocket fuel for building professional-quality Terra dApps.",
+  "author": "jkhaui <jordan.lee.163@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jkhaui/react-terra.git",
+    "directory": "packages/hooks"
+  },
+  "main":"dist/index.js",
+  "module":"dist/index.modern.js",
+  "source":"src/index.ts",
+  "scripts": {
+    "build": "../../node_modules/.bin/microbundle-crl --no-compress --format modern,cjs",
+    "start": "../../node_modules/.bin/microbundle-crl watch --no-compress --format modern,cjs",
+    "prepare": "../../node_modules/.bin/run-s build",
+    "test": "../../node_modules/.bin/run-s test:unit test:lint test:build",
+    "test:build": "../../node_modules/.bin/run-s build",
+    "test:lint": "../../node_modules/.bin/eslint ..",
+    "test:unit": "../../node_modules/.bin/cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "../../node_modules/.bin/react-scripts test --env=jsdom",
+    "predeploy": "cd ../../example && yarn install && yarn run build",
+    "deploy": "../../node_modules/.bin/gh-pages -d packages/hooks/example/build"
+  },
+  "peerDependencies": {
+    "@terra-money/terra.js": "^2.0.14",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rxjs": "^7.4.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.1",
+    "@testing-library/user-event": "^13.2.1",
+    "@terra-money/terra.js": "^2.0.14",
+    "@types/big.js": "^6.1.2",
+    "jest": "^27.2.4",
+    "microbundle-crl": "^0.13.10",
+    "npm-run-all": "^4.1.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3",
+    "react-test-renderer": "^17.0.2",
+    "rxjs": "^7.4.0",
+    "ts-jest": "^27.0.5"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@react-terra/ui-assets": "^0.0.84",
+    "@internationalized/number": "^3.0.3",
+    "@terra-money/ledger-terra-js": "^1.1.0",
+    "@terra-money/wallet-provider": "^2.2.0",
+    "@use-it/event-listener": "^0.1.6",
+    "@webreflection/json-map": "^0.1.0",
+    "big.js": "^6.1.1",
+    "fast-equals": "^2.0.3",
+    "flatted": "^3.2.2",
+    "immer": "^9.0.6",
+    "observable-hooks": "^4.0.5",
+    "rxjs-websockets": "^9.0.0"
+  }
+}
