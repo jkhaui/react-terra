@@ -7,7 +7,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 ![TypeScript>=4](https://img.shields.io/badge/TypeScript-%E2%89%A54-%233178c6)
 
-![@react-terra](react-terra.svg)
+![@react-terra](react-terra.svg | width = 200)
 
 ---
 
