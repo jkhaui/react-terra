@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useBaseUrl from '@docusaurus/useBaseUrl'
 import clsx from 'clsx'
 import GitHubButton from 'react-github-btn'
@@ -12,16 +12,25 @@ import { Tabs } from '../components/Tabs'
 
 import 'gestalt/dist/gestalt.css'
 import { PreviewSection } from '../components/PreviewSection'
+import { hotjar } from 'react-hotjar'
 
 function HomepageHeader() {
+  useEffect(() => {
+    if (window.location.origin.includes('react-terra')) {
+      hotjar.initialize(parseInt(process.env.DOCUSAURUS_HOTJAR_ID, 10), 6)
+    }
+  }, [])
+
   const { siteConfig } = useDocusaurusContext()
   const { isDarkTheme } = useThemeContext()
+
   const [itemIndex, setItemIndex] = useState(0)
+
   return (
     <div
       className={clsx('hero hero--primary', styles.heroBanner)} style={{
       padding: '0',
-  transform: 'translateY(-60px)',
+      transform: 'translateY(-60px)',
       height: '100vH',
       backgroundImage: `url(${useBaseUrl(
         `/img/illustrations/background-${!isDarkTheme
@@ -86,7 +95,10 @@ function HomepageHeader() {
                     finance. 🚀
                   </p>
                 </Flex>
-                <div style={{minHeight:226}} className='flex items-center my-5 text-xl text-gray-400'>
+                <div
+                  style={{ minHeight: 226 }}
+                  className='flex items-center my-5 text-xl text-gray-400'
+                >
                   <Flex flex='grow'>
                     {itemIndex !== 0 ? (
                       <><Flex flex='grow'>
@@ -149,7 +161,7 @@ export default function Home(): JSX.Element {
         description=''
       >
         <HomepageHeader />
-<PreviewSection/>
+        <PreviewSection />
       </Layout>
     </ColorSchemeProvider>
   )

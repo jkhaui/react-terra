@@ -2,7 +2,12 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
   plugins: ['docusaurus-tailwindcss', '@docusaurus/theme-live-codeblock',
-    '@docusaurus/plugin-ideal-image'],
+    '@docusaurus/plugin-ideal-image', [
+      'docusaurus2-dotenv',
+      {
+        path: './.env',
+        safe: true
+      }]],
   title: 'React-Terra',
   titleDelimiter: '•',
   tagline: 'Composable hooks & components for building Terra Dapps',

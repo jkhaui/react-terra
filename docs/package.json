@@ -25,6 +25,7 @@
     "@svgr/webpack": "^5.5.0",
     "clsx": "^1.1.1",
     "docusaurus-tailwindcss": "^0.1.0",
+    "docusaurus2-dotenv": "^1.4.0",
     "file-loader": "^6.2.0",
     "gestalt": "^38.0.6",
     "react": "^17.0.2",
