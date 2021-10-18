@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useObservable } from 'observable-hooks'
 import { BehaviorSubject, from, of, switchMap, timer, zip } from 'rxjs'
 import {
@@ -14,7 +16,7 @@ import {
   scan,
   shareReplay,
   startWith,
-  switchMapTo,
+  switchMapTo, throttleTime,
   withLatestFrom
 } from 'rxjs/operators'
 import { deepEqual } from 'fast-equals'
@@ -24,7 +26,7 @@ import { useWalletStatus$ } from './use-wallet-status/useWalletStatus$'
 import { sortBalancesByUSTValue } from '../utils/balance-helpers'
 import { catchErrorGracefully, genericRetryStrategy } from '../utils/rx-helpers'
 import { useExchangeRates$ } from './useExchangeRates$'
-import { useCache } from './useCache'
+// import { useCache } from './useCache'
 import {
   BalancesAction,
   dispatch,
@@ -50,7 +52,7 @@ export const usePollBalances$ = ({
   // const whileUserIsActive = useWhileUserIsActive$()
   const whileBrowserIsActive = useWhileBrowserIsActive$()
   const resetStore$ = useResetStore()
-  const { handleCacheState } = useCache()
+  // const { handleCacheState } = useCache()
 
   const isInitialFetch$ = useObservable(() => new BehaviorSubject(false))
 
@@ -125,7 +127,9 @@ export const usePollBalances$ = ({
 
   return useObservable(() =>
     pollBalances$.pipe(
+      throttleTime(520),
       switchMap(({ balances }: any) => {
+console.log(balances)
         if (isInitialFetch$.getValue()) {
           isInitialFetch$.next(false)
           if (showTokenList) {
@@ -138,7 +142,7 @@ export const usePollBalances$ = ({
           }
         }
 
-        handleCacheState(balances)
+        // handleCacheState(balances)
 
         return of(sortBalancesByUSTValue([...balances.values()]))
       })

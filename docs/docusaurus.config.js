@@ -1,70 +1,100 @@
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
-
 // With JSDoc @type annotations, IDEs can provide config autocompletion
-/** @type {import("@docusaurus/types").DocusaurusConfig} */
+/** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
-  title: "@react-terra",
-  titleDelimiter: "🚀",
-  tagline: "Rocket fuel for building professional-quality Terra dApps.",
-  url: "https://react-terra.dev",
-  baseUrl: "/",
-  onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
-  organizationName: "jkhaui",
-  projectName: "react-terra",
-
+  plugins: ['docusaurus-tailwindcss', '@docusaurus/theme-live-codeblock',
+    '@docusaurus/plugin-ideal-image'],
+  title: 'React-Terra',
+  titleDelimiter: '•',
+  tagline: 'Composable hooks & components for building Terra Dapps',
+  url: 'https://react-terra.dev',
+  baseUrl: '/',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
+  favicon: 'img/favicon.ico',
+  organizationName: 'jkhaui',
+  projectName: 'react-terra',
   presets: [
     [
-      "@docusaurus/preset-classic",
-      /** @type {import("@docusaurus/preset-classic").Options} */
+      '@docusaurus/preset-classic',
+      /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          editUrl: "https://github.com/jkhaui/react-terra/edit/master/docs",
+          sidebarPath: require.resolve('./sidebars.js'),
+          editUrl: 'https://github.com/jkhaui/react-terra/edit/master/docs'
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
-        },
-      }),
-    ],
+          customCss: require.resolve('./src/css/custom.css')
+        }
+      })
+    ]
   ],
 
   themeConfig:
-  /** @type {import("@docusaurus/preset-classic").ThemeConfig} */
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      liveCodeBlock: {
+        /**
+         * The position of the live playground, above or under the editor
+         * Possible values: "top" | "bottom"
+         */
+        playgroundPosition: 'bottom'
+      },
+      //announcementBar: {
+      //  id: 'warning',
+      //  backgroundColor: '#FDA161',
+      //  textColor: '#2B2B2B', // Defaults to `#000`.
+      //  isCloseable: false, // Defaults to `true`.
+      //  content: '⚠️<strong>Warning: This library is in an'
+      //    + ' early-stage release. It is not production'
+      //    + ' ready</strong>⚠️'
+      //},
       colorMode: {
-        defaultMode: 'dark',
+        defaultMode: 'dark'
       },
       navbar: {
-        title: "@react-terra",
+        //title: 'React-Terra',
         logo: {
-          alt: "react-terra Logo",
-          src: "img/based-192.png",
+          alt: 'React-Terra Logo',
+          src: 'img/react-terra-192.png'
         },
         hideOnScroll: true,
         items: [
           {
-            type: "doc",
-            docId: "intro",
-            position: "left",
-            label: "Docs",
+            type: 'doc',
+            docId: 'intro',
+            label: 'API Docs',
+            position: 'left'
+          }, {
+            label: 'What Is Terra',
+            to: '/whatIsTerra'
           },
           {
-            href: "https://github.com/jkhaui/react-terra",
-            label: "GitHub",
-            position: "left",
+            position: 'right',
+            href: 'https://finder.terra.money/columbus-5/address/terra1le9sln7jx79c3hrs7c3pkwgwjrdr8yup22n20m',
+            label: `Sponsor us @${['terra1le9sln7jx79c3hrs7c3pkwgwjrdr8yup22n20m'.slice(
+              0,
+              6
+            ), 'terra1le9sln7jx79c3hrs7c3pkwgwjrdr8yup22n20m'.slice(
+              -1 * 6,
+              'terra1le9sln7jx79c3hrs7c3pkwgwjrdr8yup22n20m'.length
+            )].join('...')}`
           },
-        ],
+          {
+            href: 'https://github.com/jkhaui/react-terra',
+            label: 'GitHub',
+            position: 'right'
+          }
+        ]
       },
       footer: {
-        style: "dark",
+        copyright: `MIT ${new Date().getFullYear()}`,
+        style: 'dark'
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
-    }),
-});
+        defaultLanguage: 'js',
+        plugins: ['line-numbers', 'show-language'],
+        theme: require('prism-react-renderer/themes/github'),
+        darkTheme: require('prism-react-renderer/themes/dracula')
+      }
+    })
+})

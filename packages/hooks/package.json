@@ -2,7 +2,7 @@
   "name": "@react-terra/hooks",
   "private": false,
   "sideEffects": false,
-  "version": "0.0.84",
+  "version": "0.0.852",
   "description": "Rocket fuel for building professional-quality Terra dApps.",
   "author": "jkhaui <jordan.lee.163@gmail.com>",
   "license": "MIT",
@@ -15,16 +15,14 @@
   "module":"dist/index.modern.js",
   "source":"src/index.ts",
   "scripts": {
-    "build": "../../node_modules/.bin/microbundle-crl --no-compress --format modern,cjs",
-    "start": "../../node_modules/.bin/microbundle-crl watch --no-compress --format modern,cjs",
-    "prepare": "../../node_modules/.bin/run-s build",
-    "test": "../../node_modules/.bin/run-s test:unit test:lint test:build",
-    "test:build": "../../node_modules/.bin/run-s build",
-    "test:lint": "../../node_modules/.bin/eslint ..",
-    "test:unit": "../../node_modules/.bin/cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "../../node_modules/.bin/react-scripts test --env=jsdom",
-    "predeploy": "cd ../../example && yarn install && yarn run build",
-    "deploy": "../../node_modules/.bin/gh-pages -d packages/hooks/example/build"
+    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "prepare": "run-s build",
+    "test": "run-s test:unit test:lint test:build",
+    "test:build": "run-s build",
+    "test:lint": "eslint ..",
+    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom"
   },
   "peerDependencies": {
     "@terra-money/terra.js": "^2.0.14",
@@ -46,13 +44,14 @@
     "react-scripts": "^4.0.3",
     "react-test-renderer": "^17.0.2",
     "rxjs": "^7.4.0",
+    "source-map-explorer": "^2.5.2",
     "ts-jest": "^27.0.5"
   },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@react-terra/ui-assets": "^0.0.84",
+    "@react-terra/ui-assets": "^0.0.85",
     "@internationalized/number": "^3.0.3",
     "@terra-money/ledger-terra-js": "^1.1.0",
     "@terra-money/wallet-provider": "^2.2.0",

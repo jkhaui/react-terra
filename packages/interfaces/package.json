@@ -1,7 +1,7 @@
 {
   "name": "@react-terra/interfaces",
   "author": "jkhaui <jordan.lee.163@gmail.com>",
-  "version": "0.0.84",
+  "version": "0.0.85",
   "private": false,
   "license": "MIT",
   "description": "Type definitions and interfaces for @react-terra.",

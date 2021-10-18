@@ -1,6 +1,6 @@
 {
   "name": "@react-terra/stablecoin",
-  "version": "0.0.84",
+  "version": "0.0.85",
   "description": "React UI components built for Terra dApps.",
   "license": "Apache-2.0",
   "main": "dist/main.js",
@@ -16,7 +16,7 @@
     "url": "https://github.com/jkhaui/react-terra"
   },
   "dependencies": {
-    "@react-terra/hooks": "^0.0.84"
+    "@react-terra/hooks": "^0.0.85"
   },
   "peerDependencies": {
     "@terra-money/terra.js": "^2.0.14",

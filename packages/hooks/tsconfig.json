@@ -20,12 +20,16 @@
     "noUnusedParameters": true,
     "allowSyntheticDefaultImports": true
   },
+  "references": [
+    {
+      "path": "../ui-assets"
+    }
+  ],
   "include": [
     "src"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "../../example"
   ]
 }

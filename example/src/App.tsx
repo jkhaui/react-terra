@@ -1,82 +1,13 @@
-// @ts-nocheck
 import React from 'react'
 import { useWallet, WalletStatus } from '@terra-money/wallet-provider'
-import { useLiveBalances } from '@react-terra/hooks'
+import {
+  TerraAsset,
+  useBlockNumber,
+  useIsOnline,
+  useLiveBalances
+} from '@react-terra/hooks'
 
-const App = () => {
-  const {
-    status,
-    availableConnectTypes,
-    availableInstallTypes,
-    connect,
-    install,
-    disconnect
-  } = useWallet()
-  // @ts-ignore
-  const latestBalances = useLiveBalances()
-  console.log(latestBalances, 'latestBalances')
-  return (
-    <div>
-      <div>
-        {status === WalletStatus.WALLET_NOT_CONNECTED && (
-          <>
-            {availableInstallTypes.map((connectType) => (
-              <button
-                key={'install-' + connectType}
-                onClick={() => install(connectType)}
-              >
-                Install {connectType}
-              </button>
-            ))}
-            {availableConnectTypes.map((connectType) => (
-              <button
-                key={'connect-' + connectType}
-                onClick={() => connect(connectType)}
-              >
-                Connect {connectType}
-              </button>
-            ))}
-          </>
-        )}
-        {status === WalletStatus.WALLET_CONNECTED && (
-          <button onClick={() => disconnect()}>Disconnect</button>
-        )}
-      </div>
-      <div>
-        <h1>Your Wallet</h1>
-        <ul
-          style={{
-            display: 'flex',
-            alignItems: 'stretch',
-            flexDirection: 'column',
-            width: 380,
-            fontFamily: 'Gotham,sans-serif',
-            listStyle: 'none'
-          }}
-        >
-          {latestBalances.map(
-            ({
-               terraSymbol,
-               denomToUSTExchangeRate,
-               formattedAmount,
-               amount,
-               img
-             }: any) => (
-              <StablecoinRow
-                key={terraSymbol}
-                terraSymbol={terraSymbol}
-                amount={amount}
-                formattedAmount={formattedAmount}
-                denomToUSTExchangeRate={denomToUSTExchangeRate}
-                img={img}
-              />
-            )
-          )}
-        </ul>
-      </div>
-    </div>
-  )
-}
+import './index.css'
 
 const StablecoinRow = ({
                          terraSymbol,
@@ -84,7 +15,7 @@ const StablecoinRow = ({
                          amount,
                          formattedAmount,
                          img
-                       }: any) => (
+                       }: TerraAsset) => (
   <li
     style={{
       flexGrow: 1,
@@ -93,7 +24,6 @@ const StablecoinRow = ({
       //...(amount < 0.005 && { opacity: 0.6 })
     }}
   >
-    {/*{console.log(denomToUSTExchangeRate, amount)}*/}
     <div
       style={{
         display: 'flex',
@@ -138,5 +68,105 @@ const StablecoinRow = ({
     </div>
   </li>
 )
+
+const App = () => {
+  const {
+    status,
+    availableConnectTypes,
+    availableInstallTypes,
+    connect,
+    install,
+    disconnect
+  } = useWallet()
+
+  const latestBalances = useLiveBalances()
+  const { connected, error, blockNumber } = useBlockNumber()
+  const isOnline = useIsOnline()
+console.log(latestBalances)
+  return (
+    <>
+      <div
+        className='status-bar' style={{
+        backgroundColor: isOnline ? '#A4F9AC' : '#FCBBBB'
+      }}
+      >
+        Connection status: {isOnline ? '✅' : '❌'}
+      </div>
+      <div className='container'>
+        <div className='flex flex-grow-1 space-between'>
+          <div className='block-number'>
+            <span>Block height:</span>
+            <code>
+              {connected && (
+                (blockNumber &&
+                  blockNumber.last_commit &&
+                  blockNumber.last_commit.height) || error || 'fetching data...')}
+            </code>
+          </div>
+          <div>
+            {status === WalletStatus.WALLET_NOT_CONNECTED && (
+              <>
+                {availableInstallTypes.map((connectType) => (
+                  <button
+                    key={'install-' + connectType}
+                    onClick={() => install(connectType)}
+                  >
+                    Install {connectType}
+                  </button>
+                ))}
+                {availableConnectTypes.map((connectType) => (
+                  <button
+                    key={'connect-' + connectType}
+                    className={connectType}
+                    onClick={() => connect(connectType)}
+                  >
+                    Connect {connectType}
+                  </button>
+                ))}
+              </>
+            )}
+            {status === WalletStatus.WALLET_CONNECTED && (
+              <button onClick={() => disconnect()}>Disconnect</button>
+            )}
+          </div>
+        </div>
+        <div>
+          <h1>Your Wallet</h1>
+          <ul
+            style={{
+              display: 'flex',
+              alignItems: 'stretch',
+              flexDirection: 'column',
+              width: 380,
+              fontFamily: 'Gotham,sans-serif',
+              listStyle: 'none'
+            }}
+          >
+            {latestBalances.map(
+              ({
+                 terraSymbol,
+                 currencySymbol,
+                 denomToUSTExchangeRate,
+                 formattedAmount,
+                 amount,
+                 img
+               }: TerraAsset) => (
+                <StablecoinRow
+                  key={terraSymbol}
+                  currencySymbol={currencySymbol}
+                  terraSymbol={terraSymbol}
+                  amount={amount}
+                  formattedAmount={formattedAmount}
+                  denomToUSTExchangeRate={denomToUSTExchangeRate}
+                  img={img}
+                />
+              )
+            )}
+          </ul>
+        </div>
+      </div>
+    </>
+  )
+}
 
 export default App

@@ -12,21 +12,26 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "deploy": "docusaurus build && gh-pages -d build"
+    "deploy": "docusaurus build && echo react-terra.dev > ./build/CNAME && gh-pages -d build"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.6",
-    "@docusaurus/preset-classic": "2.0.0-beta.6",
-    "@fluentui/react": "^8.33.0",
+    "@react-terra/shared-internal": "^0.0.85",
+    "@docusaurus/core": "2.0.0-beta.7",
+    "@docusaurus/preset-classic": "2.0.0-beta.7",
+    "@docusaurus/theme-live-codeblock": "2.0.0-beta.7",
+    "@docusaurus/plugin-ideal-image": "2.0.0-beta.7",
+    "@kiwicopple/prism-react-renderer": "github:kiwicopple/prism-react-renderer",
     "@mdx-js/react": "^1.6.21",
     "@svgr/webpack": "^5.5.0",
     "clsx": "^1.1.1",
-    "decimal.js-light": "^2.5.1",
+    "docusaurus-tailwindcss": "^0.1.0",
     "file-loader": "^6.2.0",
     "gestalt": "^38.0.6",
-    "prism-react-renderer": "^1.2.1",
     "react": "^17.0.2",
+    "react-copy-to-clipboard": "5.0.4",
     "react-dom": "^17.0.2",
+    "react-github-btn": "^1.2.1",
+    "react-hotjar": "^3.0.1",
     "url-loader": "^4.1.1"
   },
   "browserslist": {

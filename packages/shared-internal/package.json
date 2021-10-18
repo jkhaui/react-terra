@@ -1,11 +1,10 @@
 {
-  "name": "@react-terra/ui-assets",
+  "name": "@react-terra/shared-internal",
   "author": "jkhaui <jordan.lee.163@gmail.com>",
   "version": "0.0.85",
   "private": false,
   "license": "MIT",
-  "description": "Static assets for Terra dApps.",
-  "main": "index.js",
+  "description": "Shared internal assets for examples page and docs site. Not for external use.",
   "sideEffects": false,
   "keywords": [
     "terra",

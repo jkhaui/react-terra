@@ -1,76 +1,82 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: 'Modern Era';
   font-style: normal;
   font-weight: 400;
-  src: url('../../static/fonts/ModernEra-Regular.ttf') format('truetype');
+  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: italic;
   font-weight: 400;
-  src: url('../../static/fonts/ModernEra-RegularItalic.ttf') format('truetype');
+  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-RegularItalic.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: normal;
   font-weight: 500;
-  src: url('../../static/fonts/ModernEra-Bold.ttf') format('truetype');
+  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: italic;
   font-weight: 500;
-  src: url('../../static/fonts/ModernEra-BoldItalic.ttf') format('truetype');
+  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-BoldItalic.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: normal;
   font-weight: 700;
-  src: url('../../static/fonts/ModernEra-ExtraBold.ttf') format('truetype');
+  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-ExtraBold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: italic;
   font-weight: 700;
-  src: url('../../static/fonts/ModernEra-ExtraBoldItalic.ttf') format('truetype');
+  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-ExtraBoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Modern Era Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-MonoMedium.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Nanotech';
   font-style: normal;
   font-weight: 400;
-  src: url('../../static/fonts/Nanotech-Regular.otf') format('opentype');
+  src: url('../../../packages/shared-internal/assets/fonts/Nanotech-Regular.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Nanotech';
   font-style: italic;
   font-weight: 400;
-  src: url('../../static/fonts/Nanotech-RegularItalic.otf') format('opentype');
+  src: url('../../../packages/shared-internal/assets/fonts/Nanotech-RegularItalic.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Nanotech';
   font-style: normal;
   font-weight: 700;
-  src: url('../../static/fonts/Nanotech-Bold.otf') format('opentype');
+  src: url('../../../packages/shared-internal/assets/fonts/Nanotech-Bold.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Nanotech';
   font-style: italic;
   font-weight: 700;
-  src: url('../../static/fonts/Nanotech-BoldItalic.otf') format('opentype');
+  src: url('../../../packages/shared-internal/assets/fonts/Nanotech-BoldItalic.otf') format('opentype');
 }
 
 :root {
@@ -90,26 +96,56 @@
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
+
+nav {
+  box-shadow: none !important;
+  /*position: fixed !important;*/
+  width: 100vW;
+  justify-content: center;
+  background-color: transparent !important;
+}
+
+.navbar__inner {
+  max-width: 80rem
+}
+
+.navbar__logo:hover {
+  transition: transform 0.1s ease-in-out;
+  transform: scale(1.1)
+}
+
 html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
 html[data-theme='dark'] svg > path {
   stroke: #FFF !important;
 }
-html {
+
+pre {
+  width: 100%;
+  text-align: start;
+  /*padding-right: 4em !important;*/
+}
+
+code {
+  font-family: 'Modern Era Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace !important
+}
+
+.code-wrapper > div > div > {
+  margin-bottom: 0 !important
+}
+
+html, body, div, a, p {
   font-family: 'Modern Era', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-size: 1rem;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+}
+
+html {
+  font-size: 16px;
   font-weight: 400;
   letter-spacing: .01em;
   line-height: 1.5;
-}
-
-.body-40 {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 ::-webkit-scrollbar {
@@ -119,6 +155,9 @@ html {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Nanotech', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  background: -webkit-linear-gradient(#734BAB, #E23580, #FF6D2B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media only screen and (max-width: 996px) {
@@ -131,12 +170,48 @@ article, p, ul, li {
   max-width: 40rem;
 }
 
-.hero__subtitle {
-  margin-left: auto;
-  margin-right: auto;
+.prose-lg ul > li {
+  padding-left: 1.6666667em
 }
 
-.heroSubtitle {
-  margin-left: auto;
-  margin-right: auto;
+.prose-lg ul > li::before {
+  width: .3333333em;
+  height: .3333333em;
+  top: calc(.8888889em - .1666667em);
+  left: .2222222em
+}
+
+.prose-lg > ul > li p {
+  margin-top: .8888889em;
+  margin-bottom: .8888889em
+}
+
+.prose-lg > ul > li > :first-child {
+  margin-top: 1.3333333em
+}
+
+.prose-lg > ul > li > :last-child {
+  margin-bottom: 1.3333333em
+}
+
+svg {
+  display: initial;
+  vertical-align: initial;
+}
+
+a:hover {
+  transform: scale(1.05);
+  transition: transform 0.1s ease-in-out;
+}
+
+a {
+  transition: transform 0.1s ease-in-out;
+}
+
+aside > div > a {
+  display: none!important;
+}
+
+footer {
+  display: none !important;
 }

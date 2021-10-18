@@ -24,7 +24,7 @@
 .headerStackContainer {
   display: flex;
   align-items: stretch;
-  justify-content: center;
+  /*justify-content: center;*/
   flex-direction: column;
 }
 
