@@ -31,20 +31,6 @@
 }
 
 @font-face {
-  font-family: 'Modern Era';
-  font-style: normal;
-  font-weight: 700;
-  src: url('../../static/fonts/ModernEra-ExtraBold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Modern Era';
-  font-style: italic;
-  font-weight: 700;
-  src: url('../../static/fonts/ModernEra-ExtraBoldItalic.ttf') format('truetype');
-}
-
-@font-face {
   font-family: 'Modern Era Mono';
   font-style: normal;
   font-weight: 400;
