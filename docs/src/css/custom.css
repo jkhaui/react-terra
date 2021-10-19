@@ -6,77 +6,77 @@
   font-family: 'Modern Era';
   font-style: normal;
   font-weight: 400;
-  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-Regular.ttf') format('truetype');
+  src: url('../../static/fonts/ModernEra-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: italic;
   font-weight: 400;
-  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-RegularItalic.ttf') format('truetype');
+  src: url('../../static/fonts/ModernEra-RegularItalic.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: normal;
   font-weight: 500;
-  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-Bold.ttf') format('truetype');
+  src: url('../../static/fonts/ModernEra-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: italic;
   font-weight: 500;
-  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-BoldItalic.ttf') format('truetype');
+  src: url('../../static/fonts/ModernEra-BoldItalic.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: normal;
   font-weight: 700;
-  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-ExtraBold.ttf') format('truetype');
+  src: url('../../static/fonts/ModernEra-ExtraBold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era';
   font-style: italic;
   font-weight: 700;
-  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-ExtraBoldItalic.ttf') format('truetype');
+  src: url('../../static/fonts/ModernEra-ExtraBoldItalic.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Modern Era Mono';
   font-style: normal;
   font-weight: 400;
-  src: url('../../../packages/shared-internal/assets/fonts/ModernEra-MonoMedium.ttf') format('truetype');
+  src: url('../../static/fonts/ModernEra-MonoMedium.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Nanotech';
   font-style: normal;
   font-weight: 400;
-  src: url('../../../packages/shared-internal/assets/fonts/Nanotech-Regular.otf') format('opentype');
+  src: url('../../static/fonts/Nanotech-Regular.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Nanotech';
   font-style: italic;
   font-weight: 400;
-  src: url('../../../packages/shared-internal/assets/fonts/Nanotech-RegularItalic.otf') format('opentype');
+  src: url('../../static/fonts/Nanotech-RegularItalic.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Nanotech';
   font-style: normal;
   font-weight: 700;
-  src: url('../../../packages/shared-internal/assets/fonts/Nanotech-Bold.otf') format('opentype');
+  src: url('../../static/fonts/Nanotech-Bold.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Nanotech';
   font-style: italic;
   font-weight: 700;
-  src: url('../../../packages/shared-internal/assets/fonts/Nanotech-BoldItalic.otf') format('opentype');
+  src: url('../../static/fonts/Nanotech-BoldItalic.otf') format('opentype');
 }
 
 :root {

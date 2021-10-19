@@ -15,7 +15,6 @@
     "deploy": "docusaurus build && echo react-terra.dev > ./build/CNAME && gh-pages -d build"
   },
   "dependencies": {
-    "@react-terra/shared-internal": "^0.0.85",
     "@docusaurus/core": "2.0.0-beta.7",
     "@docusaurus/preset-classic": "2.0.0-beta.7",
     "@docusaurus/theme-live-codeblock": "2.0.0-beta.7",
@@ -33,6 +32,7 @@
     "react-dom": "^17.0.2",
     "react-github-btn": "^1.2.1",
     "react-hotjar": "^3.0.1",
+    "react-player": "^2.9.0",
     "url-loader": "^4.1.1"
   },
   "browserslist": {

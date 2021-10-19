@@ -15,12 +15,6 @@ import { PreviewSection } from '../components/PreviewSection'
 import { hotjar } from 'react-hotjar'
 
 function HomepageHeader() {
-  useEffect(() => {
-    if (window.location.origin.includes('react-terra')) {
-      hotjar.initialize(parseInt(process.env.DOCUSAURUS_HOTJAR_ID, 10), 6)
-    }
-  }, [])
-
   const { siteConfig } = useDocusaurusContext()
   const { isDarkTheme } = useThemeContext()
 
@@ -153,6 +147,12 @@ function HomepageHeader() {
 }
 
 export default function Home(): JSX.Element {
+  useEffect(() => {
+    if (window.location.origin.includes('react-terra')) {
+      // @ts-ignore
+      hotjar.initialize(process.env.DOCUSAURUS_HOTJAR_ID, 6)
+    }
+  }, [])
   const { siteConfig } = useDocusaurusContext()
   return (
     <ColorSchemeProvider colorScheme='dark' id='Docs'>
