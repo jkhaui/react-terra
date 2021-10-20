@@ -27,9 +27,3 @@ welcome and encouraged 🚀⚠️
 ```shell
   $ yarn add @react-terra/hooks
 ```
-
-## Preview
-
-### `useLiveBalances()` from `@react-terra/hooks`:
-
-![img.png](terra-hooks-preview.png)
