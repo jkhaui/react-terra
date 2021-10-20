@@ -8,6 +8,7 @@ export const PreviewSection = () => {
   const { isDarkTheme } = useThemeContext()
   return (
     <section
+      id='hooks-preview'
       style={{
         height: '100vH',
         backgroundColor: isDarkTheme ? '#18191A' : '#FFF'

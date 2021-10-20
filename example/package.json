@@ -1,6 +1,5 @@
 {
   "name": "@react-terra/example",
-  "homepage": ".",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -11,15 +10,18 @@
   },
   "dependencies": {
     "@terra-money/terra.js": "^2.0.14",
-    "@terra-money/wallet-provider": "^2.2.0",
+    "@terra-money/wallet-provider": "^2.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
-    "@react-terra/hooks": "^0.0.85"
+    "@react-terra/hooks": "^0.0.864"
   },
   "devDependencies": {
-    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
-    "@types/gestalt": "^34.3.2"
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.2",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "typescript": "^4.4.4"
   },
   "eslintConfig": {
     "extends": "react-app"

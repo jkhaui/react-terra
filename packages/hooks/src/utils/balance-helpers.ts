@@ -52,10 +52,11 @@ export const updateBalance = (
   }
 }
 
-export const sortBalancesByUSTValue = (balances: TerraAsset[]) =>
-  balances.sort((coinA, coinB) =>
+export const sortBalancesByUSTValue = (balances: TerraAsset[]) => {
+  return balances.sort((coinA, coinB) =>
     coinA.amount * coinA.denomToUSTExchangeRate <
     coinB.amount * coinB.denomToUSTExchangeRate
       ? 1
       : -1
   )
+}

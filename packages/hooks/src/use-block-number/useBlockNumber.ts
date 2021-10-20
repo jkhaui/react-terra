@@ -1,39 +1,42 @@
 import { useEffect, useRef, useState } from 'react'
 import { Block } from '@terra-money/terra.js'
+
 import { CHAIN_ID, TERRA_WS_CLIENT } from '../utils/constants'
-import { TerraWsEvent } from '../types'
+import { TerraWebSocketEvent } from '../types'
 
 export const useBlockNumber = () => {
-  const ws = useRef<WebSocket | null>(null)
+  const wsClientRef = useRef<WebSocket | null>(null)
 
   const [blockNumber, setBlockNumber] = useState<Block>()
   const [connected, setConnected] = useState(false)
   const [error, setError] = useState<Event | CloseEvent>()
 
   useEffect(() => {
-    ws.current = new WebSocket(TERRA_WS_CLIENT)
+    wsClientRef.current = new WebSocket(TERRA_WS_CLIENT)
 
-    ws.current.onopen = () => {
+    wsClientRef.current.onopen = () => {
       setConnected(true)
-      ws.current?.send(
-        JSON.stringify({
-          subscribe: TerraWsEvent.NEW_BLOCK,
-          chain_id: CHAIN_ID
-        })
-      )
+      if (wsClientRef && wsClientRef.current) {
+        wsClientRef.current.send(
+          JSON.stringify({
+            subscribe: TerraWebSocketEvent.NEW_BLOCK,
+            chain_id: CHAIN_ID
+          })
+        )
+      }
     }
 
-    ws.current.onclose = (error) => {
+    wsClientRef.current.onclose = (error) => {
       setConnected(false)
       setError(error)
     }
 
-    ws.current.onerror = (error) => {
+    wsClientRef.current.onerror = (error) => {
       setConnected(false)
       setError(error)
     }
 
-    ws.current.onmessage = (event) => {
+    wsClientRef.current.onmessage = (event) => {
       const message = JSON.parse(event.data)
       setBlockNumber(message.data.block)
     }

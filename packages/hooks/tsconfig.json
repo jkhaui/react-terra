@@ -12,6 +12,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "noImplicitReturns": true,
+    "target": "esnext",
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,

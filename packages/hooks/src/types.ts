@@ -67,7 +67,7 @@ export enum FiatCurrencies {
   THB = 'THB',
   USD = 'USD'
 }
-export enum TerraWsEvent {
+export enum TerraWebSocketEvent {
   CONNECT = 'connect',
   NEW_BLOCK = 'new_block'
 }

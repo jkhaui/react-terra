@@ -11,7 +11,6 @@ const createStorage = (provider: Storage) => ({
       : parse(json)
   },
   set(key: string, value: string) {
-console.log('xyz')
     provider.setItem(key, value)
   }
 })

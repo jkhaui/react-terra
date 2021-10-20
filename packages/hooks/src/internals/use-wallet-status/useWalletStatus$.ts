@@ -41,16 +41,16 @@ export const useWalletStatus$ = () => {
       ),
       tap(
         ([
-          _,
-          {
-            network: { name, lcd, chainID },
-            walletAddress,
-            connectType,
-            post,
-            sign
-          },
-          terra
-        ]) =>
+           _,
+           {
+             network: { name, lcd, chainID },
+             walletAddress,
+             connectType,
+             post,
+             sign
+           },
+           terra
+         ]) =>
           // Null-check is essential here otherwise the observable pipeline
           // will be thrown into an infinite loop.
           !terra &&

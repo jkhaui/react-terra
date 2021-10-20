@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useCallback } from 'react'
 import { stringify } from 'flatted'
 
@@ -9,14 +8,14 @@ import { initialCacheState } from './cache'
 const useBalancesState = createPersistedState(LOCAL_STORAGE_BALANCES_KEY)
 
 export const useCache = () => {
-  // const [cacheState, setCacheState] = useBalancesState(initialCacheState)
-  //
-  // return {
-  //   cacheState,
-  //   handleCacheState: useCallback((state: any) => {
-  //     if (state) {
-  //       setCacheState(stringify(Array.from(state)))
-  //     }
-  //   }, [])
-  // }
+  const [cacheState, setCacheState] = useBalancesState(initialCacheState)
+
+  return {
+    cacheState,
+    handleCacheState: useCallback((state: any) => {
+      if (state) {
+        setCacheState(stringify(Array.from(state)))
+      }
+    }, [])
+  }
 }

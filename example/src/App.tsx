@@ -1,73 +1,9 @@
 import React from 'react'
 import { useWallet, WalletStatus } from '@terra-money/wallet-provider'
-import {
-  TerraAsset,
-  useBlockNumber,
-  useIsOnline,
-  useLiveBalances
-} from '@react-terra/hooks'
+import { TerraAsset, useIsOnline, useLiveBalances } from '@react-terra/hooks'
 
+import { StablecoinRow } from './StablecoinRow'
 import './index.css'
-
-const StablecoinRow = ({
-                         terraSymbol,
-                         denomToUSTExchangeRate,
-                         amount,
-                         formattedAmount,
-                         img
-                       }: TerraAsset) => (
-  <li
-    style={{
-      flexGrow: 1,
-      display: 'flex',
-      padding: '0.5em 0'
-      //...(amount < 0.005 && { opacity: 0.6 })
-    }}
-  >
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column'
-      }}
-    >
-      <img width={40} src={img} alt={`${terraSymbol} stablecoin`} />
-      <label
-        style={{
-          display: 'flex',
-          flexGrow: 1,
-          justifyContent: 'center',
-          fontSize: 'smaller',
-          fontWeight: 600
-        }}
-      >
-        {terraSymbol}
-      </label>
-    </div>
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        fontSize: 'large',
-        paddingLeft: '0.5em'
-      }}
-    >
-      {formattedAmount}
-    </div>
-    <div
-      style={{
-        display: 'flex',
-        flexGrow: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        fontSize: 'small',
-        opacity: 0.6
-      }}
-    >
-      ≈{denomToUSTExchangeRate * amount} UST
-    </div>
-  </li>
-)
 
 const App = () => {
   const {
@@ -78,11 +14,12 @@ const App = () => {
     install,
     disconnect
   } = useWallet()
-
+  // const store = useTerraStore()
+  // console.log(store,'store')
   const latestBalances = useLiveBalances()
-  const { connected, error, blockNumber } = useBlockNumber()
+  // const { connected, error, blockNumber } = useBlockNumber()
   const isOnline = useIsOnline()
-console.log(latestBalances)
+  console.log(latestBalances)
   return (
     <>
       <div
@@ -96,12 +33,12 @@ console.log(latestBalances)
         <div className='flex flex-grow-1 space-between'>
           <div className='block-number'>
             <span>Block height:</span>
-            <code>
-              {connected && (
-                (blockNumber &&
-                  blockNumber.last_commit &&
-                  blockNumber.last_commit.height) || error || 'fetching data...')}
-            </code>
+            {/*<code>*/}
+            {/*  {connected && (*/}
+            {/*    (blockNumber &&*/}
+            {/*      blockNumber.last_commit &&*/}
+            {/*      blockNumber.last_commit.height) || error || 'fetching data...')}*/}
+            {/*</code>*/}
           </div>
           <div>
             {status === WalletStatus.WALLET_NOT_CONNECTED && (

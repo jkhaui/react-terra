@@ -1,19 +1,25 @@
-import { useObservableEagerState } from 'observable-hooks'
+import { useObservableState } from 'observable-hooks'
 import { usePollBalances$ } from '../internals/usePollBalances$'
 import { LiveBalanceOptions, TerraAsset } from '../types'
 import { TERRA_BLOCK_TIME } from '../utils/constants'
+import { sortBalancesByUSTValue } from '../utils/balance-helpers'
+import { initialState } from '../shared/use-terra-store/terra-store'
 
 export const useLiveBalances = (
   options: LiveBalanceOptions = { showLuna: false }
 ) => {
   const latestBalances$ = usePollBalances$({
     ...{
-      showLuna: false,
       showTokenList: [],
       refetchInterval: TERRA_BLOCK_TIME
     },
     ...options
   })
 
-  return useObservableEagerState(latestBalances$) as TerraAsset[]
+  return useObservableState(
+    // N.b. Do NOT pipe any operators here or it will cause unnecessary
+    // emissions.
+    latestBalances$,
+    sortBalancesByUSTValue(Array.from(initialState.balances.values()))
+  ) as TerraAsset[]
 }

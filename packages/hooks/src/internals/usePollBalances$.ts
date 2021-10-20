@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { useObservable } from 'observable-hooks'
 import { BehaviorSubject, from, of, switchMap, timer, zip } from 'rxjs'
 import {
@@ -10,13 +8,13 @@ import {
 import { Coins, LCDClient } from '@terra-money/terra.js'
 import { enableMapSet } from 'immer'
 import {
+  debounceTime,
   distinctUntilChanged,
   repeatWhen,
   retryWhen,
   scan,
   shareReplay,
-  startWith,
-  switchMapTo, throttleTime,
+  switchMapTo,
   withLatestFrom
 } from 'rxjs/operators'
 import { deepEqual } from 'fast-equals'
@@ -26,24 +24,24 @@ import { useWalletStatus$ } from './use-wallet-status/useWalletStatus$'
 import { sortBalancesByUSTValue } from '../utils/balance-helpers'
 import { catchErrorGracefully, genericRetryStrategy } from '../utils/rx-helpers'
 import { useExchangeRates$ } from './useExchangeRates$'
-// import { useCache } from './useCache'
+import { useCache } from './useCache'
 import {
   BalancesAction,
   dispatch,
-  initialState,
   state$
 } from '../shared/use-terra-store/terra-store'
 import { ICoin, LiveBalanceOptions } from '../types'
 import { useResetStore } from '../shared/use-terra-store/useResetStore'
+import { isIframe } from '../utils/isIframe'
 
 enableMapSet()
 
 export const usePollBalances$ = ({
-  showLuna,
-  showTokenList,
-  refetchInterval,
-  onBalanceChange
-}: LiveBalanceOptions) => {
+                                   showLuna,
+                                   showTokenList,
+                                   refetchInterval,
+                                   onBalanceChange
+                                 }: LiveBalanceOptions) => {
   const store$ = useObservable(() => state$)
 
   const exchangeRates$ = useExchangeRates$(showLuna)
@@ -52,7 +50,7 @@ export const usePollBalances$ = ({
   // const whileUserIsActive = useWhileUserIsActive$()
   const whileBrowserIsActive = useWhileBrowserIsActive$()
   const resetStore$ = useResetStore()
-  // const { handleCacheState } = useCache()
+  const { handleCacheState } = useCache()
 
   const isInitialFetch$ = useObservable(() => new BehaviorSubject(false))
 
@@ -90,46 +88,44 @@ export const usePollBalances$ = ({
       switchMap(([coins, connectionStatus]: any) =>
         connectionStatus !== WalletStatus.WALLET_NOT_CONNECTED
           ? zip(
-              from(coins).pipe(repeatWhen(() => exchangeRates$)),
-              exchangeRates$
-            ).pipe(
-              scan(
-                (
-                  _acc: any[],
-                  [
-                    { denom: denomBalance, amount: amountBalance },
-                    { denom: denomExchangeRate, amount: amountExchangeRate }
-                  ]: ICoin[]
-                ) =>
-                  dispatch(BalancesAction.Update, {
-                    denomBalance,
-                    amountBalance,
-                    denomExchangeRate,
-                    amountExchangeRate,
+            from(coins).pipe(repeatWhen(() => exchangeRates$)),
+            exchangeRates$
+          ).pipe(
+            scan(
+              (
+                _acc: any[],
+                [
+                  { denom: denomBalance, amount: amountBalance },
+                  { denom: denomExchangeRate, amount: amountExchangeRate }
+                ]: ICoin[]
+              ) =>
+                dispatch(BalancesAction.Update, {
+                  denomBalance,
+                  amountBalance,
+                  denomExchangeRate,
+                  amountExchangeRate,
 
-                    showLuna
-                  })
-              )
+                  showLuna
+                })
             )
+          )
           : resetStore$()
       ),
       switchMapTo(store$),
-      catchErrorGracefully,
-      // whileUserIsActive,
-      whileBrowserIsActive,
       distinctUntilChanged((prev: any[], current: any[]) =>
         deepEqual(prev, current)
       ),
-      startWith(initialState),
+      catchErrorGracefully,
+      // whileUserIsActive,
+      whileBrowserIsActive,
       shareReplay({ bufferSize: 1, refCount: true })
     )
   )
 
   return useObservable(() =>
     pollBalances$.pipe(
-      throttleTime(520),
+      debounceTime(50),
       switchMap(({ balances }: any) => {
-console.log(balances)
         if (isInitialFetch$.getValue()) {
           isInitialFetch$.next(false)
           if (showTokenList) {
@@ -142,9 +138,11 @@ console.log(balances)
           }
         }
 
-        // handleCacheState(balances)
+        if (!isIframe()) {
+          handleCacheState(balances)
+        }
 
-        return of(sortBalancesByUSTValue([...balances.values()]))
+        return of(sortBalancesByUSTValue(Array.from(balances.values())))
       })
     )
   )

@@ -15,25 +15,13 @@
     "packages/ui-assets",
     "packages/*/*"
   ],
-  "keywords": [
-    "terra",
-    "terra-money",
-    "cosmos",
-    "dapp",
-    "react",
-    "hooks",
-    "crypto",
-    "blockchain",
-    "rxjs",
-    "wallet",
-    "cw20"
-  ],
   "license": "MIT",
   "scripts": {
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "clean": "yarn workspaces run rimraf \"{dist,build,node_modules}\" && rimraf node_modules package-lock.json",
     "start": "yarn workspace @react-terra/hooks run start && yarn workspace @react-terra/example run start",
+    "start:hooks": "yarn workspace @react-terra/hooks run start && yarn workspace @react-terra/example run start",
     "dev": "yarn workspace @react-terra/hooks run dev",
     "docs": "yarn workspace docs docusaurus start",
     "docs:deploy": "yarn workspace docs deploy",
@@ -44,11 +32,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.15.4",
     "@types/eslint": "^7.2.14",
-    "@types/jest": "^27.0.2",
-    "@types/node": "^16.10.2",
     "@types/prettier": "^2.4.1",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "coveralls": "^3.0.5",
@@ -67,7 +51,6 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-standard": "^5.0.0",
-    "prettier": "^2.1.2",
-    "typescript": "^4.4.3"
+    "prettier": "^2.1.2"
   }
 }
