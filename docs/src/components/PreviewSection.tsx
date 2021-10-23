@@ -3,9 +3,13 @@ import useThemeContext from '@theme/hooks/useThemeContext'
 import ReactPlayer from 'react-player'
 import useBaseUrl from '@docusaurus/core/lib/client/exports/useBaseUrl'
 import { Flex } from 'gestalt'
+import { isMobilePortrait } from './responsive/isMobilePortrait'
+import { isMobileLandscape } from './responsive/isMobileLandscape'
 
 export const PreviewSection = () => {
   const { isDarkTheme } = useThemeContext()
+  const isOnMobilePortrait = isMobilePortrait()
+  const isOnMobileLandscape = isMobileLandscape()
   return (
     <section
       id='hooks-preview'
@@ -17,12 +21,12 @@ export const PreviewSection = () => {
     >
       <Flex direction='column' justifyContent='center' alignItems='center'>
         <h1
-          className='text-5xl font-bold sm:text-5xl
-                    sm:tracking-tight lg:text-5xl'
-        >Demo
+          className='text-5xl font-bold sm:text-5xl sm:tracking-tight lg:text-5xl'
+        >
+          Demo
         </h1>
         <p
-          className={`mb-8 mt-2 text-left text-xl text-gray-${isDarkTheme
+          className={`px-2 mb-8 mt-2 text-left sm:text-md md:text-md lg:text-xl text-gray-${isDarkTheme
             ? '3'
             : '7'}00`}
         >
@@ -30,7 +34,9 @@ export const PreviewSection = () => {
         </p>
       </Flex>
       <ReactPlayer
-        width={800}
+        width={(!isOnMobilePortrait && !isOnMobileLandscape)
+          ? 960
+          : isOnMobilePortrait ? 420 : 421}
         playing
         loop
         url={`${useBaseUrl('/video/terra-wallet.mp4')}`}
