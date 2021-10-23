@@ -4,7 +4,7 @@ import { getChainOptions, WalletProvider } from '@terra-money/wallet-provider'
 import ReactDOM from 'react-dom'
 
 import App from './App'
-import './index.css'
+import './styles.css'
 
 getChainOptions().then((chainOptions) =>
   ReactDOM.render(
