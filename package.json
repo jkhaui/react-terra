@@ -9,7 +9,6 @@
   "workspaces": [
     "docs",
     "example",
-    "packages/shared-internal",
     "packages/hooks",
     "packages/interfaces",
     "packages/ui-assets",
