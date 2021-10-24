@@ -6,10 +6,14 @@ import { sortBalancesByUSTValue } from '../utils/balance-helpers'
 import { initialState } from '../shared/use-terra-store/terra-store'
 
 export const useLiveBalances = (
-  options: LiveBalanceOptions = { showLuna: false }
+  options: LiveBalanceOptions = {
+    showLuna: false,
+    disableCaching: false
+  }
 ) => {
   const latestBalances$ = usePollBalances$({
     ...{
+      // TODO: Create type for strings of whitelisted CW20 tokens
       showTokenList: [],
       refetchInterval: TERRA_BLOCK_TIME
     },

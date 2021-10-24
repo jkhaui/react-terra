@@ -38,6 +38,7 @@ enableMapSet()
 
 export const usePollBalances$ = ({
                                    showLuna,
+                                   disableCaching,
                                    showTokenList,
                                    refetchInterval,
                                    onBalanceChange
@@ -138,7 +139,7 @@ export const usePollBalances$ = ({
           }
         }
 
-        if (!isIframe()) {
+        if (!isIframe() && !disableCaching) {
           handleCacheState(balances)
         }
 
