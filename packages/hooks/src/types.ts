@@ -67,10 +67,12 @@ export enum FiatCurrencies {
   THB = 'THB',
   USD = 'USD'
 }
+
 export enum TerraWebSocketEvent {
   CONNECT = 'connect',
   NEW_BLOCK = 'new_block'
 }
+
 export type Luna = 'LUNA'
 
 export interface ICoin {
@@ -92,7 +94,7 @@ export interface IOptions {
 
 export interface LiveBalanceOptions {
   showLuna: boolean
-  disableCaching: boolean
+  disableCaching?: boolean
   showTokenList?: any
   refetchInterval?: number
 
