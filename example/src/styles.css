@@ -19,6 +19,8 @@ body {
 .WalletAddress {
   user-select: none;
   cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 600;
   background: -webkit-linear-gradient(
     #1743D1,
     #005CE2,
@@ -33,7 +35,10 @@ body {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: larger;
+}
+
+.WalletAddress-wrapper {
+  padding-bottom: 1rem
 }
 
 code {
@@ -176,7 +181,7 @@ button {
   font-size: 16px;
   font-weight: 600;
   height: 28px;
-  padding: 0px 12px;
+  padding: 0 12px;
   position: relative;
   text-align: center;
   margin-top: 1em;

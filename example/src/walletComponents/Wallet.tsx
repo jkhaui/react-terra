@@ -17,9 +17,11 @@ export const Wallet = () => {
 
   return (
     <div className='Wallet'>
-      <code className='WalletAddress'>
-        {truncate(terraStore.walletAddress)}
-      </code>
+      <div className='WalletAddress-wrapper'>
+        <code className='WalletAddress'>
+          {truncate(terraStore.walletAddress)}
+        </code>
+      </div>
       <ul
         className='flex flex-col'
         style={{
