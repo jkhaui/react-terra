@@ -1,21 +1,31 @@
-import React from "react";
-import { TerraAsset, useLiveBalances } from "@react-terra/hooks";
-import { Stablecoin } from "./Stablecoin";
+import React from 'react'
+import { TerraAsset, useLiveBalances, useTerraStore } from '@react-terra/hooks'
+import { Stablecoin } from './Stablecoin'
+
+const truncate = (text = '', [h, t] = [6, 6]) => {
+  const head = text.slice(0, h)
+  const tail = text.slice(-1 * t, text.length)
+  return text.length > h + t ? [head, tail].join('...') : text
+}
 
 export const Wallet = () => {
+  const terraStore = useTerraStore()
+
   const liveBalances = useLiveBalances({
     showLuna: false
-  });
+  })
 
   return (
-    <div>
-      <h1>Your Wallet</h1>
+    <div className='Wallet'>
+      <code className='WalletAddress'>
+        {truncate(terraStore.walletAddress)}
+      </code>
       <ul
-        className="flex flex-col"
+        className='flex flex-col'
         style={{
-          alignItems: "stretch",
+          alignItems: 'stretch',
           width: 268,
-          listStyle: "none"
+          listStyle: 'none'
         }}
       >
         {liveBalances.map(
@@ -40,5 +50,5 @@ export const Wallet = () => {
         )}
       </ul>
     </div>
-  );
-};
+  )
+}
