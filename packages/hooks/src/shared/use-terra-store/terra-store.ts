@@ -1,5 +1,3 @@
-import { JSONMap } from '@webreflection/json-map'
-import { parse } from 'flatted'
 import { LCDClient } from '@terra-money/terra.js'
 import { ConnectType as TerraConnectType } from '@terra-money/wallet-provider'
 import { mapDenomDataToBalances } from '../../utils/mapDenomDataToBalances'
@@ -7,8 +5,7 @@ import { LOCAL_STORAGE_BALANCES_KEY } from '../../utils/constants'
 import { Actions, Store } from '../../internals/terra-store-internal'
 import { Denom, TerraAsset } from '../../types'
 import { updateBalance } from '../../utils/balance-helpers'
-
-const localStorageBalancesKey = localStorage.getItem(LOCAL_STORAGE_BALANCES_KEY)
+import { tryCache } from '../../utils/util-fns'
 
 export interface TerraState extends ConnectionData {
   balances: Map<string, TerraAsset>
@@ -27,7 +24,7 @@ export interface ConnectionData {
 
 export enum TerraStore {
   Terra = 'terra',
-  Balances = 'Balances',
+  Balances = 'balances',
   USTToLunaExchangeRate = 'ustToLunaExchangeRate',
   Post = 'post',
   Sign = 'sign',
@@ -45,9 +42,7 @@ export const initialState = {
   isTestnet: false,
   walletAddress: '',
 
-  balances: localStorageBalancesKey
-    ? new JSONMap(parse(localStorageBalancesKey!))
-    : mapDenomDataToBalances(true),
+  balances: tryCache(),
   walletValueInUST: 0,
 
   ustToLunaExchangeRate: 0
@@ -83,11 +78,9 @@ export interface USTToLunaExchangeRateActionPayloads {
   [USTToLunaExchangeRateAction.Reset]: undefined
 }
 
-const connectionDataActions: Actions<
-  TerraState,
+const connectionDataActions: Actions<TerraState,
   ConnectionDataAction,
-  ConnectionDataActionPayloads
-> = {
+  ConnectionDataActionPayloads> = {
   [ConnectionDataAction.Update]: (payload) => (draftState: TerraState) => {
     for (const [key, value] of Object.entries(payload)) {
       draftState[key] = value
@@ -107,22 +100,20 @@ const connectionDataActions: Actions<
   }
 }
 
-const balancesActions: Actions<
-  TerraState,
+const balancesActions: Actions<TerraState,
   BalancesAction,
-  BalancesActionPayloads
-> = {
+  BalancesActionPayloads> = {
   [BalancesAction.Update]:
     ({ ...params }) =>
-    (draftState: TerraState) => {
-      updateBalance(
-        { ...params },
-        draftState.ustToLunaExchangeRate,
-        draftState.balances
-      )
+      (draftState: TerraState) => {
+        updateBalance(
+          { ...params },
+          draftState.ustToLunaExchangeRate,
+          draftState.balances
+        )
 
-      return draftState
-    },
+        return draftState
+      },
   [BalancesAction.Reset]: () => (draftState: TerraState) => {
     draftState.balances = mapDenomDataToBalances(false)
     localStorage.removeItem(LOCAL_STORAGE_BALANCES_KEY)
@@ -130,25 +121,23 @@ const balancesActions: Actions<
     return draftState
   }
 }
-const ustToLunaExchangeRateActions: Actions<
-  TerraState,
+const ustToLunaExchangeRateActions: Actions<TerraState,
   USTToLunaExchangeRateAction,
-  USTToLunaExchangeRateActionPayloads
-> = {
+  USTToLunaExchangeRateActionPayloads> = {
   [USTToLunaExchangeRateAction.Update]:
     ({ amount, showLuna }) =>
-    (draftState: TerraState) => {
-      draftState.ustToLunaExchangeRate = amount
-      if (showLuna) {
-        const luna = draftState.balances.get(Denom.LUNA)
+      (draftState: TerraState) => {
+        draftState.ustToLunaExchangeRate = amount
+        if (showLuna) {
+          const luna = draftState.balances.get(Denom.LUNA)
 
-        if (luna) {
-          luna.denomToUSTExchangeRate = amount
+          if (luna) {
+            luna.denomToUSTExchangeRate = amount
+          }
         }
-      }
 
-      return draftState
-    },
+        return draftState
+      },
   [USTToLunaExchangeRateAction.Reset]: () => (draftState: TerraState) => {
     draftState.ustToLunaExchangeRate = 0
 
