@@ -95,7 +95,7 @@ export interface IOptions {
 export interface LiveBalanceOptions {
   showLuna: boolean
   disableCaching?: boolean
-  showTokenList?: any
+  cw20TokenList?: any
   refetchInterval?: number
 
   onBalanceChange?: (data?: any) => void

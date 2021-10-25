@@ -11,7 +11,7 @@ export const useLiveBalances=(options: LiveBalanceOptions) => {
       showLuna: false,
       disableCaching: false,
       // TODO: Create type for strings of whitelisted CW20 tokens
-      showTokenList: [],
+      cw20TokenList: [],
       refetchInterval: TERRA_BLOCK_TIME
     },
     ...options

@@ -39,7 +39,7 @@ enableMapSet()
 export const usePollBalances$ = ({
                                    showLuna,
                                    disableCaching,
-                                   showTokenList,
+                                   cw20TokenList,
                                    refetchInterval,
                                    onBalanceChange
                                  }: LiveBalanceOptions) => {
@@ -129,7 +129,7 @@ export const usePollBalances$ = ({
       switchMap(({ balances }: any) => {
         if (isInitialFetch$.getValue()) {
           isInitialFetch$.next(false)
-          if (showTokenList) {
+          if (cw20TokenList) {
             // noop
             // TODO
           }
