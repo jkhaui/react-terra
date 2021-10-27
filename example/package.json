@@ -9,14 +9,14 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@terra-money/terra.js": "^2.0.14",
-    "@terra-money/wallet-provider": "^2.3.0",
+    "@react-terra/hooks": "^0.0.865",
+    "@terra-money/terra.js": "2.1.19",
+    "@terra-money/wallet-provider": "2.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-content-loader": "6.0.3",
     "react-image": "4.0.3",
-    "react-scripts": "^4.0.3",
-    "@react-terra/hooks": "^0.0.864"
+    "react-scripts": "^4.0.3"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

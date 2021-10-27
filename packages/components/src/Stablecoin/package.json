@@ -16,7 +16,8 @@
     "url": "https://github.com/jkhaui/react-terra"
   },
   "dependencies": {
-    "@react-terra/hooks": "^0.0.85"
+    "@react-terra/hooks": "^0.0.85",
+    "styled-components": "^5.3.3"
   },
   "peerDependencies": {
     "@terra-money/terra.js": "^2.0.14",
