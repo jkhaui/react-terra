@@ -2,7 +2,7 @@
   "name": "@react-terra/hooks",
   "private": false,
   "sideEffects": false,
-  "version": "0.0.865",
+  "version": "0.0.866",
   "description": "React hooks for building professional-quality Terra dApps.",
   "author": "jkhaui <jordan.lee.163@gmail.com>",
   "license": "MIT",
