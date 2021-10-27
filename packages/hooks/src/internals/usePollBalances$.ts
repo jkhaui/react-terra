@@ -11,7 +11,6 @@ import {
   debounceTime,
   distinctUntilChanged,
   repeatWhen,
-  retryWhen,
   scan,
   shareReplay,
   switchMapTo,
@@ -22,7 +21,7 @@ import { useConnectionStatus$ } from './use-wallet-status/useConnectionStatus$'
 import { useWhileBrowserIsActive$ } from './useWhileBrowserIsActive$'
 import { useWalletStatus$ } from './use-wallet-status/useWalletStatus$'
 import { sortBalancesByUSTValue } from '../utils/balance-helpers'
-import { catchErrorGracefully, genericRetryStrategy } from '../utils/rx-helpers'
+import { catchErrorGracefully } from '../utils/rx-helpers'
 import { useExchangeRates$ } from './useExchangeRates$'
 import { useCache } from './useCache'
 import {
@@ -33,6 +32,7 @@ import {
 import { ICoin, LiveBalanceOptions } from '../types'
 import { useResetStore } from '../shared/use-terra-store/useResetStore'
 import { isIframe } from '../utils/isIframe'
+import { Pagination } from '@terra-money/terra.js/dist/client/lcd/APIRequester'
 
 enableMapSet()
 
@@ -68,14 +68,7 @@ export const usePollBalances$ = ({
               from(
                 terra.bank
                   .balance(connectedWallet.walletAddress)
-                  .then((coins: Coins) => coins.toData())
-              ).pipe(
-                retryWhen(
-                  genericRetryStrategy({
-                    maxRetryAttempts: 3,
-                    scalingDuration: refetchInterval
-                  })
-                )
+                  .then((res: [Coins, Pagination]) => res[0].toData())
               )
             )
           )
