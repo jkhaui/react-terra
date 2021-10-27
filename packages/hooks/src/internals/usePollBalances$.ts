@@ -118,7 +118,7 @@ export const usePollBalances$ = ({
 
   return useObservable(() =>
     pollBalances$.pipe(
-      debounceTime(50),
+      debounceTime(250),
       switchMap(({ balances }: any) => {
         if (isInitialFetch$.getValue()) {
           isInitialFetch$.next(false)
