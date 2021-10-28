@@ -17,6 +17,7 @@ export const useExchangeRates$ = (showLuna: boolean) => {
       filter((terra: LCDClient | undefined) => terra !== undefined),
       switchMap((terra: LCDClient) =>
         // `from` is initially used to convert a promise into an Observable.
+        // TODO: investigate duplicate network requests
         from(terra.oracle.exchangeRates().then((coins) => coins.toData())).pipe(
           tap((coins: ICoin[]) =>
             coins.find(
@@ -28,8 +29,8 @@ export const useExchangeRates$ = (showLuna: boolean) => {
                 })
             )
           ),
-          // We then use `from` to stream in Terra asset balances returned
-          // by the promise.
+          // We then use `from` to stream in Terra asset balances returned by
+          // the promise.
           switchMap((coins) => from(coins))
         )
       )
