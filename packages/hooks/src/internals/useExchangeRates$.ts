@@ -4,8 +4,8 @@ import { from } from 'rxjs'
 import { LCDClient } from '@terra-money/terra.js'
 import { useTerra$ } from '../shared/use-terra-store/useTerraStore'
 import {
-  dispatch,
-  USTToLunaExchangeRateAction
+  ChainStateAction,
+  dispatch
 } from '../shared/use-terra-store/terra-store'
 import { Denom, ICoin } from '../types'
 
@@ -23,14 +23,17 @@ export const useExchangeRates$ = (showLuna: boolean) => {
             coins.find(
               ({ denom, amount }) =>
                 denom === Denom.USD &&
-                dispatch(USTToLunaExchangeRateAction.Update, {
-                  amount: parseFloat(amount),
-                  showLuna
+                dispatch(ChainStateAction.Update, {
+                  ustToLunaExchangeRate: {
+                    amount: parseFloat(amount),
+                    showLuna
+                  }
                 })
             )
           ),
           // We then use `from` to stream in Terra asset balances returned by
           // the promise.
+          tap(() => console.log(terra)),
           switchMap((coins) => from(coins))
         )
       )

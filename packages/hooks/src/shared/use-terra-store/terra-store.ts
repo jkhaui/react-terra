@@ -15,8 +15,8 @@ export interface TerraState extends ConnectionData {
 }
 
 export interface ChainState {
-    gasPrice: number
-    ustToLunaExchangeRate: number
+  gasPrice: number
+  ustToLunaExchangeRate: number
 }
 
 export interface ConnectionData {
@@ -62,14 +62,14 @@ export enum ConnectionDataAction {
   Reset = 'connectionData/reset'
 }
 
+export enum ChainStateAction {
+  Update = 'chainState/update',
+  Reset = 'chainState/reset'
+}
+
 export enum BalancesAction {
   Update = 'balances/update',
   Reset = 'balances/reset'
-}
-
-export enum USTToLunaExchangeRateAction {
-  Update = 'ustToLunaExchangeRate/update',
-  Reset = 'ustToLunaExchangeRate/reset'
 }
 
 export interface ConnectionDataActionPayloads {
@@ -77,14 +77,14 @@ export interface ConnectionDataActionPayloads {
   [ConnectionDataAction.Reset]: ConnectionData
 }
 
+export interface ChainStateActionPayloads {
+  [ChainStateAction.Update]: ChainState
+  [ChainStateAction.Reset]: ChainState
+}
+
 export interface BalancesActionPayloads {
   [BalancesAction.Update]: { [key: string]: string }
   [BalancesAction.Reset]: undefined
-}
-
-export interface USTToLunaExchangeRateActionPayloads {
-  [USTToLunaExchangeRateAction.Update]: { amount: number; showLuna: boolean }
-  [USTToLunaExchangeRateAction.Reset]: undefined
 }
 
 const connectionDataActions: Actions<TerraState,
@@ -109,6 +109,34 @@ const connectionDataActions: Actions<TerraState,
   }
 }
 
+const chainStateActions: Actions<TerraState, ChainStateAction, ChainStateActionPayloads> = {
+  [ChainStateAction.Update]: (payload) => (draftState: TerraState) => {
+    for (const [key, value] of Object.entries(payload)) {
+      if (key === 'ustToLunaExchangeRate') {
+        const amount = value['amount']
+        const showLuna = value['showLuna']
+
+        draftState.chainState[key] = amount
+
+        if (showLuna) {
+          const luna = draftState.balances.get(Denom.LUNA)
+
+          if (luna) {
+            luna.denomToUSTExchangeRate = amount
+          }
+        }
+
+        return draftState
+      } else {
+        draftState.chainState[key] = value
+      }
+    }
+    return draftState
+  },
+  [ChainStateAction.Reset]: () => (draftState: TerraState) => {
+    return draftState
+  }
+}
 const balancesActions: Actions<TerraState,
   BalancesAction,
   BalancesActionPayloads> = {
@@ -131,33 +159,9 @@ const balancesActions: Actions<TerraState,
   }
 }
 
-const ustToLunaExchangeRateActions: Actions<TerraState,
-  USTToLunaExchangeRateAction,
-  USTToLunaExchangeRateActionPayloads> = {
-  [USTToLunaExchangeRateAction.Update]:
-    ({ amount, showLuna }) =>
-      (draftState: TerraState) => {
-        draftState.chainState.ustToLunaExchangeRate = amount
-        if (showLuna) {
-          const luna = draftState.balances.get(Denom.LUNA)
-
-          if (luna) {
-            luna.denomToUSTExchangeRate = amount
-          }
-        }
-
-        return draftState
-      },
-  [USTToLunaExchangeRateAction.Reset]: () => (draftState: TerraState) => {
-    draftState.chainState.ustToLunaExchangeRate = 0
-
-    return draftState
-  }
-}
-
 export const { state$, dispatch } = new Store(initialState, {
   ...connectionDataActions,
-  ...balancesActions,
-  ...ustToLunaExchangeRateActions
+  ...chainStateActions,
+  ...balancesActions
   // TODO: fix type defs
 } as any)
