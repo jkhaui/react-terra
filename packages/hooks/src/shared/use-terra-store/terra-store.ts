@@ -9,8 +9,14 @@ import { tryCache } from '../../utils/util-fns'
 
 export interface TerraState extends ConnectionData {
   balances: Map<string, TerraAsset>
-  ustToLunaExchangeRate: number
   walletValueInUST: number
+
+  chainState: ChainState
+}
+
+export interface ChainState {
+    gasPrice: number
+    ustToLunaExchangeRate: number
 }
 
 export interface ConnectionData {
@@ -25,13 +31,13 @@ export interface ConnectionData {
 export enum TerraStore {
   Terra = 'terra',
   Balances = 'balances',
-  USTToLunaExchangeRate = 'ustToLunaExchangeRate',
   Post = 'post',
   Sign = 'sign',
   ConnectType = 'connectType',
   IsTestnet = 'isTestnet',
   WalletAddress = 'walletAddress',
-  WalletValueInUST = 'walletValueInUST'
+  WalletValueInUST = 'walletValueInUST',
+  ChainState = 'chainState'
 }
 
 export const initialState = {
@@ -45,7 +51,10 @@ export const initialState = {
   balances: tryCache(),
   walletValueInUST: 0,
 
-  ustToLunaExchangeRate: 0
+  chainState: {
+    gasPrice: 0,
+    ustToLunaExchangeRate: 0
+  }
 }
 
 export enum ConnectionDataAction {
@@ -108,7 +117,7 @@ const balancesActions: Actions<TerraState,
       (draftState: TerraState) => {
         updateBalance(
           { ...params },
-          draftState.ustToLunaExchangeRate,
+          draftState.chainState.ustToLunaExchangeRate,
           draftState.balances
         )
 
@@ -121,13 +130,14 @@ const balancesActions: Actions<TerraState,
     return draftState
   }
 }
+
 const ustToLunaExchangeRateActions: Actions<TerraState,
   USTToLunaExchangeRateAction,
   USTToLunaExchangeRateActionPayloads> = {
   [USTToLunaExchangeRateAction.Update]:
     ({ amount, showLuna }) =>
       (draftState: TerraState) => {
-        draftState.ustToLunaExchangeRate = amount
+        draftState.chainState.ustToLunaExchangeRate = amount
         if (showLuna) {
           const luna = draftState.balances.get(Denom.LUNA)
 
@@ -139,7 +149,7 @@ const ustToLunaExchangeRateActions: Actions<TerraState,
         return draftState
       },
   [USTToLunaExchangeRateAction.Reset]: () => (draftState: TerraState) => {
-    draftState.ustToLunaExchangeRate = 0
+    draftState.chainState.ustToLunaExchangeRate = 0
 
     return draftState
   }

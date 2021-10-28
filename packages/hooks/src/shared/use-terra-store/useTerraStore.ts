@@ -1,22 +1,18 @@
-import {
-  pluckFirst,
-  useObservable,
-  useObservableEagerState
-} from 'observable-hooks'
-import { state$, TerraState, TerraStore } from './terra-store'
+import { pluckFirst, useObservable, useObservableState } from 'observable-hooks'
+import { initialState, state$, TerraState, TerraStore } from './terra-store'
 import { Selectors } from '../../internals/terra-store-internal'
 
 const terraSelector: Selectors<TerraState> = {
   connectionInfo: (state: TerraState) => state.terra,
   balances: ({ balances }: TerraState) => balances,
-  ustToLunaExchangeRate: ({ ustToLunaExchangeRate }: TerraState) =>
-    ustToLunaExchangeRate
+  chainState: ({ chainState }: TerraState) => chainState
 }
+
 export const useTerraStore = (selector?: TerraStore) => {
   // All outer observables should be wrapped in the `useObservable` helper
   // hook to avoid unnecessary emissions.
   const store$ = useObservable(() => state$)
-  const state = useObservableEagerState(store$)
+  const state = useObservableState(store$, initialState)
 
   switch (selector) {
     case TerraStore.Terra:
@@ -25,9 +21,9 @@ export const useTerraStore = (selector?: TerraStore) => {
     case TerraStore.Balances:
       // @ts-ignore
       return terraSelector.balances(state)
-    case TerraStore.USTToLunaExchangeRate:
+    case TerraStore.ChainState:
       // @ts-ignore
-      return terraSelector.ustToLunaExchangeRate(state)
+      return terraSelector.chainState(state)
     default:
       return state
   }

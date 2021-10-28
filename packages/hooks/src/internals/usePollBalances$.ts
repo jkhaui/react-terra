@@ -140,6 +140,8 @@ export const usePollBalances$ = ({
       // network requests, observables may emit more frequently than desired.
       // Debouncing emissions can guard against unintended performance
       // degradation.
+      // However, even frequent emissions should not redraw React's state
+      // tree and is thus unlikely to compromise performance.
       debounceTime(500),
       switchMap(({ balances }: { balances: Map<string, TerraAsset> }) => {
         // Client applications can pass callbacks here to execute UI-related

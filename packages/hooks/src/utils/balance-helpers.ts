@@ -19,6 +19,7 @@ export const updateBalance = (
     amountBalance,
     denomExchangeRate,
     amountExchangeRate,
+
     showLuna
   }: { [key: string]: string },
   ustToLunaExchangeRate: number,
@@ -37,6 +38,7 @@ export const updateBalance = (
       // TODO: in future, add support for other CW20-compliant tokens on Terra.
       balanceKey.formattedAmount = `${LUNA_TICKER} ${balanceAmount}`
     }
+
     balanceKey.amount = balanceAmount
   }
 
@@ -45,6 +47,7 @@ export const updateBalance = (
   if (exchangeRateKey) {
     if (denomExchangeRate === Denom.LUNA) {
       exchangeRateKey.denomToUSTExchangeRate = ustToLunaExchangeRate
+
       return
     }
     exchangeRateKey.denomToUSTExchangeRate =
