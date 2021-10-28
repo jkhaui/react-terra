@@ -17,7 +17,32 @@ constituent UI library—Terra Components
 ## Installation
 
 ```shell
-  yarn add @react-terra/hooks @terra-money/terra.js rxjs
+  yarn add @react-terra/hooks @terra-money/terra.js 
+  @terra-money/wallet-provider rxjs
+```
+
+Follow the instructions from https://github.com/terra-money/wallet-provider 
+to wrap your app in the wallet provider:
+
+```jsx
+import {
+  NetworkInfo,
+  WalletProvider,
+  WalletStatus,
+  getChainOptions,
+} from '@terra-money/wallet-provider';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// getChainOptions(): Promise<{ defaultNetwork, walletConnectChainIds }>
+getChainOptions().then((chainOptions) => {
+  ReactDOM.render(
+    <WalletProvider {...chainOptions}>
+      <YOUR_APP />
+    </WalletProvider>,
+    document.getElementById('root'),
+  );
+});
 ```
 
 ## Example
