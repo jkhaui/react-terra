@@ -29,7 +29,7 @@ import {
   dispatch,
   state$
 } from '../shared/use-terra-store/terra-store'
-import { ICoin, LiveBalanceOptions } from '../types'
+import { ICoin, LiveBalanceOptions, TerraAsset } from '../types'
 import { useResetStore } from '../shared/use-terra-store/useResetStore'
 import { isIframe } from '../utils/isIframe'
 import { Pagination } from '@terra-money/terra.js/dist/client/lcd/APIRequester'
@@ -79,10 +79,28 @@ export const usePollBalances$ = ({
       distinctUntilChanged((prev: any[], current: any[]) =>
         deepEqual(prev, current)
       ),
-      switchMap(([coins, connectionStatus]: any) =>
+      switchMap(([coins, connectionStatus]: [TerraAsset[], WalletStatus]) =>
         connectionStatus !== WalletStatus.WALLET_NOT_CONNECTED
+          // Combine a stream of balances from Terra stablecoin
+          // denominations, LUNA, and custom CW20 tokens with a stream of
+          // the latest exchanges rates (provided by validator oracles) from
+          // the LCD client.
+
+          // Note that one of these conditions must have been met to reach
+          // this stage:
+          // 1) this is the initial load
+          // 2) a change in denom balances has been detected
+          // 3) the browser has returned to an active state after being inactive
           ? zip(
-            from(coins).pipe(repeatWhen(() => exchangeRates$)),
+            from(coins).pipe(
+              // The combined balances and exchange rates streams may be of
+              // different lengths if a wallet does not have all the
+              // denominations returned by the LCD exchange rates API.
+
+              // Therefore, it is necessary to repeat the shorter stream
+              // when merging the streams to prevent the combined observable
+              // stream from prematurely terminating.
+              repeatWhen(() => exchangeRates$)),
             exchangeRates$
           ).pipe(
             scan(
@@ -118,17 +136,25 @@ export const usePollBalances$ = ({
 
   return useObservable(() =>
     pollBalances$.pipe(
-      debounceTime(250),
-      switchMap(({ balances }: any) => {
+      // Due to the unpredictable nature of browser events and latency from
+      // network requests, observables may emit more frequently than desired.
+      // Debouncing emissions can guard against unintended performance
+      // degradation.
+      debounceTime(500),
+      switchMap(({ balances }: { balances: Map<string, TerraAsset> }) => {
+        // Client applications can pass callbacks here to execute UI-related
+        // side-effects (e.g. showing a toast notification if a user's
+        // balance changes.
         if (isInitialFetch$.getValue()) {
           isInitialFetch$.next(false)
           if (cw20TokenList) {
             // noop
             // TODO
           }
-          if (onBalanceChange) {
-            // noop
-            // TODO
+          if (onBalanceChange && typeof onBalanceChange() === 'function') {
+            // TODO: pass in args for the denomination whose balance has
+            //  changed and its previous and current amounts.
+            onBalanceChange()
           }
         }
 
