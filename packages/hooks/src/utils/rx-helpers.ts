@@ -35,9 +35,10 @@ export const dispatchAction = <T>(
 export const logWithDebugger = <T>(
   label: string = ''
   // @ts-ignore
-): MonoTypeOperatorFunction<T> => pipe(tap(
-  // @ts-ignore
-  input$ => console.log(input$, label)))
+): MonoTypeOperatorFunction<T> => pipe(tap((value: any) => console.log(
+  value,
+  label
+)))
 
 /**
  * A convenient helper to safely trigger React state updates within an
