@@ -1,7 +1,6 @@
-// @ts-nocheck
+import { useState } from 'react'
 import { useObservable } from 'observable-hooks'
 import {
-  finalize,
   shareReplay,
   skipWhile,
   switchMap,
@@ -17,50 +16,57 @@ import {
 } from '../shared/use-terra-store/terra-store'
 import { Denom, ICoin } from '../types'
 import { logWithDebugger, withStatefulEffect } from '../utils/rx-helpers'
-import { useEffect, useState } from 'react'
+import { useDebouncedEffect } from './useDebouncedEffect'
 
 export const useExchangeRates$ = (showLuna: boolean) => {
   const terra$ = useTerra$()
-  const [isFetching, setIsFetching] = useState(false)
+
+  const [fetching, setFetching] = useState(false)
   const [exchangeRates, setExchangeRates] = useState([])
-useEffect(()=>{
-console.log('$$$$$')
-  console.log(exchangeRates)
-  console.log(isFetching)
-  console.log('$$$$$')
-},[isFetching, exchangeRates])
+
+  useDebouncedEffect(() => {
+    if (fetching) {
+      setFetching(false)
+    }
+  }, [fetching], 1000)
+
   return useObservable((inputs$) =>
     terra$.pipe(
       skipWhile((terra: LCDClient | undefined) => terra === undefined),
-      withStatefulEffect(setIsFetching, true),
+      // Certain conditions can cause multiple emissions to occur, triggering
+      // excessive network requests to the oracle API.
+      // Setting a boolean flag allows for control and short-circuiting of
+      // this unwanted behaviour.
+      withStatefulEffect(setFetching, true),
       withLatestFrom(inputs$),
-      logWithDebugger('xyz'),
-      switchMap(([terra, [fetchingState, cachedExchangeRates]]: [LCDClient, [boolean, Coin[]]]) =>
-        iif(
-          () => !fetchingState,
-          defer(() => from(terra.oracle.exchangeRates()
-            .then((coins) => coins.toData()))).pipe(
-            tap(() => console.log(fetchingState, 'fetchingState')),
-            withStatefulEffect(setExchangeRates),
-logWithDebugger('it works'),
-            tap((coins: ICoin[]) =>
-              coins.find(
-                ({ denom, amount }) =>
-                  denom === Denom.USD &&
-                  dispatch(ChainStateAction.Update, {
-                    ustToLunaExchangeRate: {
-                      amount: parseFloat(amount),
-                      showLuna
-                    }
-                  })
-              )
+      switchMap(
+        ([terra, [fetchingState, exchangeRatesState]]:
+           [LCDClient, [boolean, Coin[]]]
+        ) =>
+          iif(
+            () => !fetchingState,
+            defer(() => from(terra.oracle.exchangeRates()
+              .then((coins) => coins.toData()))).pipe(
+              withStatefulEffect(setExchangeRates),
+              tap((coins: ICoin[]) =>
+                coins.find(
+                  ({ denom, amount }) =>
+                    denom === Denom.USD &&
+                    dispatch(ChainStateAction.Update, {
+                      ustToLunaExchangeRate: {
+                        amount: parseFloat(amount),
+                        showLuna
+                      }
+                    })
+                )
+              ),
+              logWithDebugger('Exchange rates'),
+              // Stream in exchange rates for each coin denomination.
+              switchMap((coins) => from(coins)),
+              shareReplay({ bufferSize: 1, refCount: true })
             ),
-            // Stream in exchange rates from the denomination coins
-            switchMap((coins) => from(coins)),
-            finalize(() => console.log('DONE')),
-            shareReplay({ bufferSize: 1, refCount: true })
-          ),
-          from(cachedExchangeRates)
-        ))
-    ), [isFetching, exchangeRates])
+            from(exchangeRatesState)
+          )
+      )
+    ), [fetching, exchangeRates])
 }
