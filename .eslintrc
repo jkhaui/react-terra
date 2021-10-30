@@ -7,12 +7,17 @@
     "prettier",
     "plugin:testing-library/recommended"
   ],
-  "plugins": ["prettier"],
+  "plugins": [
+    "prettier",
+    "styled-components-a11y"
+  ],
   "env": {
     "node": true
   },
   "parserOptions": {
-    "project": ["./tsconfig.json"],
+    "project": [
+      "./tsconfig.json"
+    ],
     "ecmaVersion": 2020,
     "ecmaFeatures": {
       "legacyDecorators": true,

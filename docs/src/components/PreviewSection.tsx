@@ -37,8 +37,9 @@ export const PreviewSection = () => {
         width={(!isOnMobilePortrait && !isOnMobileLandscape)
           ? 960
           : isOnMobilePortrait ? 420 : 421}
-        playing
-        loop
+        playing={true}
+        controls={true}
+        loop={true}
         url={`${useBaseUrl('/video/terra-wallet.mp4')}`}
       />
     </section>

@@ -10,7 +10,7 @@
       }]],
   title: 'React-Terra',
   titleDelimiter: '•',
-  tagline: 'Composable hooks & components for building Terra Dapps',
+  tagline: 'composable building blocks for Terra dapps',
   url: 'https://react-terra.dev',
   baseUrl: '/',
   onBrokenLinks: 'warn',

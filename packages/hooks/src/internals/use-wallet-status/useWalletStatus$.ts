@@ -19,6 +19,7 @@ import {
 } from '../../shared/use-terra-store/terra-store'
 import { useTerra$ } from '../../shared/use-terra-store/useTerraStore'
 import { NETWORK_TESTNET } from '../../utils/constants'
+import { logWithDebugger } from '../../utils/rx-helpers'
 
 const predicate = (
   connectionStatus: WalletStatus,
@@ -70,6 +71,7 @@ export const useWalletStatus$ = () => {
       distinctUntilChanged((prev: any[], current: any[]) =>
         deepEqual(prev, current)
       ),
+      logWithDebugger('wallet2'),
       shareReplay({ bufferSize: 1, refCount: true })
     )
   )

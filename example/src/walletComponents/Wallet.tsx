@@ -14,7 +14,7 @@ export const Wallet = () => {
   const liveBalances = useLiveBalances({
     showLuna: false
   })
-
+// console.log(liveBalances,'live balances')
   return (
     <div className='Wallet'>
       <div className='WalletAddress-wrapper'>

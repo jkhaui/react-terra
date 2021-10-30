@@ -5,13 +5,13 @@ import {
   dispatch,
   initialState,
   BalancesAction,
-  USTToLunaExchangeRateAction
+  ChainStateAction
 } from './terra-store'
 
 export const useResetStore = () =>
   useCallback(() => {
     dispatch(BalancesAction.Reset)
-    dispatch(USTToLunaExchangeRateAction.Reset)
+    dispatch(ChainStateAction.Reset)
     dispatch(ConnectionDataAction.Reset)
 
     return of(initialState)

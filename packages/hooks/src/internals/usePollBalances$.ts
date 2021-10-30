@@ -6,6 +6,7 @@ import {
   WalletStatus
 } from '@terra-money/wallet-provider'
 import { Coins, LCDClient } from '@terra-money/terra.js'
+import { Pagination } from '@terra-money/terra.js/dist/client/lcd/APIRequester'
 import { enableMapSet } from 'immer'
 import {
   debounceTime,
@@ -32,7 +33,6 @@ import {
 import { ICoin, LiveBalanceOptions, TerraAsset } from '../types'
 import { useResetStore } from '../shared/use-terra-store/useResetStore'
 import { isIframe } from '../utils/isIframe'
-import { Pagination } from '@terra-money/terra.js/dist/client/lcd/APIRequester'
 
 enableMapSet()
 
@@ -100,7 +100,8 @@ export const usePollBalances$ = ({
               // Therefore, it is necessary to repeat the shorter stream
               // when merging the streams to prevent the combined observable
               // stream from prematurely terminating.
-              repeatWhen(() => exchangeRates$)),
+              repeatWhen(() => exchangeRates$)
+            ),
             exchangeRates$
           ).pipe(
             scan(
