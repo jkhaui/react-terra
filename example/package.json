@@ -9,7 +9,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@react-terra/hooks": "^0.0.868",
+    "@react-terra/hooks": "^0.0.867",
     "@terra-money/terra.js": "2.1.19",
     "@terra-money/wallet-provider": "2.3.0",
     "react": "^17.0.2",
