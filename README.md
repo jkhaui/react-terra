@@ -55,6 +55,9 @@ getChainOptions().then((chainOptions) => {
 
 ## Run in Dev Mode
 
+_n.b. you need to have the [Terra Station extension for Chrome/Brave](https://chrome.google.com/webstore/detail/terra-station/aiifbnbfobpmeekipheeijimdpnlpgpp?hl=en) 
+installed, along with a wallet address._
+
 - From the root directory, run `yarn`
 - In a terminal window, run the following command: 
   > yarn start:hooks
