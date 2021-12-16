@@ -52,3 +52,16 @@ getChainOptions().then((chainOptions) => {
   );
 });
 ```
+
+## Run in Dev Mode
+
+- From the root directory, run `yarn`
+- In a terminal window, run the following command: 
+  > yarn start:hooks
+
+- Then, in a second terminal:
+
+  cd into `example`;
+
+  Run the following command:
+  > yarn start

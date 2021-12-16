@@ -21,7 +21,6 @@
     "clean": "yarn workspaces run rimraf \"{dist,build,node_modules}\" && rimraf node_modules package-lock.json",
     "start": "yarn workspace @react-terra/hooks run start && yarn workspace @react-terra/example run start",
     "start:hooks": "yarn workspace @react-terra/hooks run start && yarn workspace @react-terra/example run start",
-    "dev": "yarn workspace @react-terra/hooks run dev",
     "docs": "yarn workspace docs docusaurus start",
     "docs:deploy": "yarn workspace docs deploy",
     "build": "yarn clean && yarn workspace @react-terra/hooks run build",
