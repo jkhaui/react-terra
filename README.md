@@ -13,8 +13,11 @@
 ---
 
 ⚠️Warning! This library is in a highly experimental state. It is 
-not currently recommended for production use. However, contributions are 
-welcome and encouraged 🚀⚠️
+not currently recommended for production use. 
+
+Furthermore, react-terra **has not been updated for Terra 2.0** and is currently in broken state due to outdated dependencies. 
+
+However, contributions are welcome and encouraged 🚀⚠️
 
 **👉 Visit [react-terra.dev](https://react-terra.dev) for full docs**
 
